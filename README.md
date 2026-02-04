@@ -6,6 +6,7 @@ The focus is on clean test architecture, maintainability, and accessibility-awar
 ---
 
 ## Project Structure
+``` 
 src/test/java
 ├─ base # Test setup (browser, context, validation)
 ├─ config # Runtime configuration (BASE_URL, ENV, credentials access)
@@ -14,7 +15,7 @@ src/test/java
 ├─ pages # Page Objects (UI interactions & assertions)
 ├─ workflow # Business flows (e.g. LoginWorkflow)
 └─ tests # Test classes (orchestration only)
-
+``` 
 
 ---
 
