@@ -23,7 +23,7 @@ src/test/java
 
 - **All assertions live in Page Objects**
 - **Business flows (e.g. login) are centralized in workflows**
-- **Test data is defined as typed Java objects (no JSON)**
+- **Test data is defined as typed Java objects**
 
 
 ---
@@ -64,7 +64,7 @@ Validation happens centrally in `BaseTest`.
 
 ---
 
-## ▶️ Running Tests
+## Running Tests
 
 Run a single test:
 ```bash
