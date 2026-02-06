@@ -158,6 +158,12 @@ public class LandingPage {
     public void assertAgateNumberLabelIsVisible() { assertThat(agateNumberLabel).isVisible(); }
     public void assertAgateNumberValueIsVisible() { assertThat(agateNumberValue).isVisible(); }
 
+    public void assertAgateNumberValue(String expectedNumber) {
+        assertThat(agateNumberValue)
+                .containsText(expectedNumber);
+    }
+
+
     public void assertUserMenuLinksVisible() {
         assertThat(userDataLink).isVisible();
         assertThat(privacyLink).isVisible();

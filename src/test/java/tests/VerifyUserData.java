@@ -24,11 +24,7 @@ public class VerifyUserData extends BaseTest {
         userDataPage.assertPageLoaded();
 
         TestUser user = TestUsers.STANDARD_USER;
-
-        userDataPage.assertPersonalDataSection(user);
-
-        //userDataPage.assertContactSection(user);
-
+        userDataPage.assertUserData(user);
 
     }
 }

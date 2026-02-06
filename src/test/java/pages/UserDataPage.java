@@ -33,6 +33,8 @@ public class UserDataPage {
     private static final String LABEL_ADRESS = "Adresse";
     private static final String LABEL_PHONE = "Telefonnummer";
     private static final String LABEL_LANGUAGE = "Korrespondenzsprache";
+
+
     private final Page page;
 
     // Headings
@@ -42,6 +44,7 @@ public class UserDataPage {
     private final Locator mobileHeading;
     private final Locator contactHeading;
     private final Locator caption;
+
 
 
     // Actions
@@ -99,6 +102,8 @@ public class UserDataPage {
                 AriaRole.LINK,
                 new Page.GetByRoleOptions().setName(ACTION_EDIT_CONTACT)
         );
+
+
     }
 
     // --- assertions ---
@@ -130,43 +135,54 @@ public class UserDataPage {
 
     //helper method for personal data assertions
     private void assertFieldValue(String label, String expectedValue) {
-        Locator row = page.getByText(
-                label,
-                new Page.GetByTextOptions().setExact(true)
-        ).locator("..");
+        Locator dt = page.locator("dl.agate-p-data-list dt")
+                .getByText(label, new Locator.GetByTextOptions().setExact(true));
 
-        assertThat(row).containsText(expectedValue);
+        assertThat(dt).hasCount(1);
+
+        Locator dd = dt.locator("xpath=following-sibling::dd[1]");
+        assertThat(dd).hasText(expectedValue);
     }
 
-    public void assertPersonalDataSection(String salutation, String fullName, String birthYear) {
+    private void assertMultilineFieldValue(String expectedValue) {
+        Locator dd = page.locator("dl.agate-p-data-list dt")
+                .getByText(UserDataPage.LABEL_ADRESS, new Locator.GetByTextOptions().setExact(true))
+                .locator("xpath=following-sibling::dd[1]");
+
+        String[] lines = expectedValue.split("\\R+"); // \n oder \r\n
+        for (String line : lines) {
+            if (!line.isBlank()) {
+                assertThat(dd).containsText(line.trim());
+            }
+        }
+    }
+
+
+
+    public void assertUserData(String salutation, String fullName,
+                               String birthYear, String email, String mobile,
+                               String address, String phone, String language) {
         assertFieldValue(LABEL_SALUTATION, salutation);
         assertFieldValue(LABEL_NAME, fullName);
         assertFieldValue(LABEL_BIRTH_YEAR, birthYear);
-    }
-
-    public void assertContactSection(String email, String mobile, String address, String phone, String language) {
         assertFieldValue(LABEL_EMAIL, email);
         assertFieldValue(LABEL_MOBILE, mobile);
-        assertFieldValue(LABEL_ADRESS, address);
+        assertMultilineFieldValue(address);
         assertFieldValue(LABEL_PHONE, phone);
         assertFieldValue(LABEL_LANGUAGE, language);
     }
 
-    public void assertPersonalDataSection(TestUser user) {
-        assertPersonalDataSection(
-                user.personal().salutation(),
-                user.personal().fullName(),
-                user.personal().birthYear()
-        );
-    }
 
-    public void assertContactSection(TestUser user) {
-        assertContactSection(
-                user.contact().email(),
-                user.contact().mobile(),
-                user.contact().address(),
-                user.contact().phone(),
-                user.contact().language()
+    public void assertUserData(TestUser user) {
+        assertUserData(
+                user.salutation(),
+                user.fullName(),
+                user.birthYear(),
+                user.email(),
+                user.mobile(),
+                user.address(),
+                user.phone(),
+                user.language()
         );
     }
 
