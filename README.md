@@ -13,6 +13,7 @@ src/test/java
 ├─ model # Test data models (e.g. TestUser)
 ├─ testdata # Concrete test users (Java constants)
 ├─ pages # Page Objects (UI interactions & assertions)
+├─ selectors # Page-specific locator factories that encapsulate UI text and selector logic
 ├─ workflow # Business flows (e.g. LoginWorkflow)
 └─ tests # Test classes (orchestration only)
 ``` 

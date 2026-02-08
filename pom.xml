@@ -52,6 +52,9 @@
                 <version>3.2.5</version>
                 <configuration>
                     <useModulePath>false</useModulePath>
+                    <includes>
+                        <include>**/tests/**</include>
+                    </includes>
                 </configuration>
             </plugin>
             <plugin>
